@@ -1,0 +1,329 @@
+[
+ {"id": "compromisso-01", "task": "compromisso", "contexto": {"hoje": "2026-03-10"},
+  "mensagem": "blz entao fica combinado ne, qui q vem 15h no shopping ali perto da tua casa 🫡",
+  "gabarito": {"data": "2026-03-12", "hora": "15:00"},
+  "pega": "\"qui q vem\" é quinta que vem, e o horário vem colado no número"},
+
+ {"id": "compromisso-02", "task": "compromisso", "contexto": {"hoje": "2026-03-10"},
+  "mensagem": "amnh as 9 da manha pode ser? to de folga",
+  "gabarito": {"data": "2026-03-11", "hora": "09:00"},
+  "pega": "\"amnh\" sem vogais, e \"9 da manhã\" precisa virar 09:00"},
+
+ {"id": "compromisso-03", "task": "compromisso", "contexto": {"hoje": "2026-06-05"},
+  "mensagem": "ó, dps de amanhã as 19h30 no bar do zé, leva a galera",
+  "gabarito": {"data": "2026-06-07", "hora": "19:30"},
+  "pega": "\"dps de amanhã\" são dois dias, não um"},
+
+ {"id": "compromisso-04", "task": "compromisso", "contexto": {"hoje": "2026-06-05"},
+  "mensagem": "sabado n da pq to viajando, mas domingo as 8 da noite eu to livre",
+  "gabarito": {"data": "2026-06-07", "hora": "20:00"},
+  "pega": "o primeiro dia citado é justamente o que não serve; 8 da noite é 20:00"},
+
+ {"id": "compromisso-05", "task": "compromisso", "contexto": {"hoje": "2026-01-20"},
+  "mensagem": "vamo marcar dia 3 do mes que vem, umas 14h",
+  "gabarito": {"data": "2026-02-03", "hora": "14:00"},
+  "pega": "o mês muda, o dia é número solto"},
+
+ {"id": "compromisso-06", "task": "compromisso", "contexto": {"hoje": "2026-09-14"},
+  "mensagem": "meio dia e meia de qta feira, fechado?",
+  "gabarito": {"data": "2026-09-16", "hora": "12:30"},
+  "pega": "\"meio dia e meia\" é 12:30, e \"qta\" é quarta"},
+
+ {"id": "compromisso-07", "task": "compromisso", "contexto": {"hoje": "2026-09-14"},
+  "mensagem": "hj n da nao. segunda que vem msm horario, 10h",
+  "gabarito": {"data": "2026-09-21", "hora": "10:00"},
+  "pega": "hoje já é segunda, então \"segunda que vem\" é a próxima"},
+
+ {"id": "compromisso-08", "task": "compromisso", "contexto": {"hoje": "2026-11-30"},
+  "mensagem": "primeiro dia do mes q vem as 8 em ponto, sem atraso pfv 🙏",
+  "gabarito": {"data": "2026-12-01", "hora": "08:00"},
+  "pega": "vira o mês e o ano quase vira junto"},
+
+ {"id": "valor-01", "task": "valor", "contexto": {"pergunta": "Quanto a pessoa está pedindo, em reais?"},
+  "mensagem": "me manda 1,5k que eu te pago sexta sem falta",
+  "gabarito": 1500,
+  "pega": "\"1,5k\" com vírgula decimal é mil e quinhentos"},
+
+ {"id": "valor-02", "task": "valor", "contexto": {"pergunta": "Qual foi o valor total?"},
+  "mensagem": "ficou R$ 1.234,56 no total viu, ja com a entrega",
+  "gabarito": 1234.56,
+  "pega": "ponto de milhar e vírgula decimal, ao contrário do inglês"},
+
+ {"id": "valor-03", "task": "valor", "contexto": {"pergunta": "Quanto custou o lanche?"},
+  "mensagem": "o lanche deu 87 e noventa, mais caro q da ultima vez",
+  "gabarito": 87.90,
+  "pega": "o valor está escrito como se fala, sem vírgula nenhuma"},
+
+ {"id": "valor-04", "task": "valor", "contexto": {"pergunta": "Quanto cada pessoa pagou?"},
+  "mensagem": "a conta deu 240 e a gente rachou em 4, tranquilo",
+  "gabarito": 60,
+  "pega": "o número pedido não aparece na mensagem"},
+
+ {"id": "valor-05", "task": "valor", "contexto": {"pergunta": "Qual foi o valor total da compra?"},
+  "mensagem": "custou dois mil e quinhentos, parcelei em 10x sem juros",
+  "gabarito": 2500,
+  "pega": "valor por extenso, com um 10 no meio para confundir"},
+
+ {"id": "valor-06", "task": "valor", "contexto": {"pergunta": "Quanto ficou depois do desconto?"},
+  "mensagem": "tava 49,90 mas consegui 10% de desconto na hora de pagar",
+  "gabarito": 44.91,
+  "pega": "desconto sobre vírgula decimal"},
+
+ {"id": "valor-07", "task": "valor", "contexto": {"pergunta": "Quanto ainda falta pagar?"},
+  "mensagem": "era 100 pila, ja dei 20 de entrada",
+  "gabarito": 80,
+  "pega": "\"pila\" é real, e a resposta é o que sobra"},
+
+ {"id": "valor-08", "task": "valor", "contexto": {"pergunta": "Quanto ficou no total?"},
+  "mensagem": "ele cobra 15 pila a hora e eu fiquei 3h e meia la",
+  "gabarito": 52.50,
+  "pega": "\"3h e meia\" é 3,5 e não 3"},
+
+ {"id": "intencao-01", "task": "intencao",
+  "mensagem": "oi td bem? vi seu perfil e queria te apresentar uma oportunidade incrivel de renda extra 💰💰💰 chama no pv q eu te explico direitinho",
+  "gabarito": "spam",
+  "pega": "educado e simpático, mas é golpe de renda extra"},
+
+ {"id": "intencao-02", "task": "intencao",
+  "mensagem": "e ai sumido, bora um churras aqui em casa sabado? leva a patroa",
+  "gabarito": "convite",
+  "pega": "o convite vem disfarçado de cobrança de sumiço"},
+
+ {"id": "intencao-03", "task": "intencao",
+  "mensagem": "oq foi aquilo ontem viu, paguei caro dms e veio tudo frio. decepcionado",
+  "gabarito": "reclamacao",
+  "pega": "sem xingamento nenhum, mas é reclamação"},
+
+ {"id": "intencao-04", "task": "intencao",
+  "mensagem": "amg me desculpa mas n vou conseguir ir amanha, surgiu um imprevisto aqui 😔",
+  "gabarito": "cancelamento",
+  "pega": "pedir desculpa não é desabafo"},
+
+ {"id": "intencao-05", "task": "intencao",
+  "mensagem": "oi, passando so pra lembrar do boleto que venceu dia 10 ta",
+  "gabarito": "cobranca",
+  "pega": "\"só lembrando\" é cobrança com jeitinho"},
+
+ {"id": "intencao-06", "task": "intencao",
+  "mensagem": "confirmadissimo!! to saindo daqui ja ja",
+  "gabarito": "confirmacao",
+  "pega": "superlativo inventado, coisa que todo brasileiro faz"},
+
+ {"id": "intencao-07", "task": "intencao",
+  "mensagem": "mano vc consegue me buscar na rodoviaria as 6h? to sem como ir",
+  "gabarito": "favor",
+  "pega": "tem hora e lugar, mas não é convite nem compromisso"},
+
+ {"id": "intencao-08", "task": "intencao",
+  "mensagem": "sla to cansado dms essa semana, parece q nada da certo, so queria dormir uns 3 dias",
+  "gabarito": "desabafo",
+  "pega": "não pede nada e não reclama de ninguém"},
+
+ {"id": "resposta-01", "task": "resposta", "contexto": {"convite": "ir à praia no sábado, saindo às 5h da manhã"},
+  "mensagem": "ah ia ser otimo acordar 5h da manha no meu unico dia de folga 🙄",
+  "gabarito": "recusou",
+  "pega": "ironia pura; \"ótimo\" aqui quer dizer o contrário"},
+
+ {"id": "resposta-02", "task": "resposta", "contexto": {"convite": "jogar bola no domingo de manhã"},
+  "mensagem": "pode crer, to dentro 👊",
+  "gabarito": "aceitou",
+  "pega": "gíria curta, sem a palavra sim"},
+
+ {"id": "resposta-03", "task": "resposta", "contexto": {"convite": "jantar na sexta à noite"},
+  "mensagem": "vou ver se consigo, te falo amanha",
+  "gabarito": "talvez",
+  "pega": "o clássico talvez brasileiro"},
+
+ {"id": "resposta-04", "task": "resposta", "contexto": {"convite": "viajar no feriado"},
+  "mensagem": "nossa que vontade... mas to sem grana esse mes 😭",
+  "gabarito": "recusou",
+  "pega": "começa animado e recusa no \"mas\""},
+
+ {"id": "resposta-05", "task": "resposta", "contexto": {"convite": "happy hour depois do trabalho"},
+  "mensagem": "se eu conseguir sair cedo do trampo eu apareço",
+  "gabarito": "talvez",
+  "pega": "condicional disfarçado de promessa"},
+
+ {"id": "resposta-06", "task": "resposta", "contexto": {"convite": "assistir o jogo na casa dele"},
+  "mensagem": "fechouuu",
+  "gabarito": "aceitou",
+  "pega": "uma palavra só, com vogal esticada"},
+
+ {"id": "resposta-07", "task": "resposta", "contexto": {"convite": "almoço de domingo na casa da avó"},
+  "mensagem": "ixi, justo nesse dia eu tenho compromisso marcado faz tempo",
+  "gabarito": "recusou",
+  "pega": "\"ixi\" já entrega a recusa antes do resto"},
+
+ {"id": "resposta-08", "task": "resposta", "contexto": {"convite": "ir ao show no mês que vem"},
+  "mensagem": "caramba... deixa eu ver o preço primeiro",
+  "gabarito": "talvez",
+  "pega": "não é não, mas também não é sim"},
+
+ {"id": "pedido-01", "task": "pedido", "contexto": {"situacao": "Você está dirigindo e seu amigo está no banco do passageiro."},
+  "mensagem": "nossa que calor né kkkk",
+  "alternativas": {"A": "Elogiar o clima de hoje", "B": "Reclamar do trânsito", "C": "Pedir para ligar o ar-condicionado", "D": "Avisar que está passando mal"},
+  "gabarito": "C",
+  "pega": "ninguém comenta o clima dentro de um carro por acaso"},
+
+ {"id": "pedido-02", "task": "pedido", "contexto": {"situacao": "Você mora com sua irmã e a pia está cheia de louça desde ontem."},
+  "mensagem": "olha a pia aí ó 👀",
+  "alternativas": {"A": "Pedir para você lavar a louça", "B": "Avisar que a pia entupiu", "C": "Elogiar a limpeza da cozinha", "D": "Pedir para comprar detergente"},
+  "gabarito": "A",
+  "pega": "apontar o problema é o jeito de pedir"},
+
+ {"id": "pedido-03", "task": "pedido", "contexto": {"situacao": "Você está falando numa reunião online e um colega te manda mensagem privada."},
+  "mensagem": "teu microfone 🎙️",
+  "alternativas": {"A": "Elogiar a qualidade do seu áudio", "B": "Pedir o microfone emprestado", "C": "Pedir para você falar mais alto", "D": "Avisar que tem algo errado com o seu microfone"},
+  "gabarito": "D",
+  "pega": "duas palavras sem verbo, e ainda assim é um aviso urgente"},
+
+ {"id": "pedido-04", "task": "pedido", "contexto": {"situacao": "Sua mãe te manda mensagem enquanto você está no mercado."},
+  "mensagem": "o arroz acabou viu",
+  "alternativas": {"A": "Avisar que não vai ter almoço", "B": "Pedir para você comprar arroz", "C": "Reclamar do preço do arroz", "D": "Avisar que vai cozinhar outra coisa"},
+  "gabarito": "B",
+  "pega": "o pedido depende de saber onde você está"},
+
+ {"id": "pedido-05", "task": "pedido", "contexto": {"situacao": "Você avisou no grupo que está indo de carro para o centro. Seu vizinho responde."},
+  "mensagem": "vc vai passar perto do mercado?",
+  "alternativas": {"A": "Saber como está o trânsito", "B": "Avisar que o mercado fechou", "C": "Pedir carona ou que você traga algo", "D": "Perguntar se você já almoçou"},
+  "gabarito": "C",
+  "pega": "pergunta inocente que é um pedido com rodeio"},
+
+ {"id": "pedido-06", "task": "pedido", "contexto": {"situacao": "Vocês estão conversando por mensagem há um tempo."},
+  "mensagem": "to com 5% de bateria aqui ó",
+  "alternativas": {"A": "Avisar que pode sumir da conversa a qualquer momento", "B": "Pedir um carregador emprestado", "C": "Reclamar que o celular é ruim", "D": "Pedir para você ligar no lugar de digitar"},
+  "gabarito": "A",
+  "pega": "é aviso, não pedido de socorro"},
+
+ {"id": "pedido-07", "task": "pedido", "contexto": {"situacao": "Você chega na casa de um amigo e ele está terminando de cozinhar."},
+  "mensagem": "que cheiro bom hein",
+  "alternativas": {"A": "Perguntar o que vai ter de sobremesa", "B": "Avisar que o fogão está aceso", "C": "Reclamar que está com fome", "D": "Elogiar a comida deixando claro que quer provar"},
+  "gabarito": "D",
+  "pega": "elogio que é pedido de prato"},
+
+ {"id": "pedido-08", "task": "pedido", "contexto": {"situacao": "Faz uma semana que você pediu um favor grande a um colega e ele não respondeu."},
+  "mensagem": "oi! tudo certo? só dando um alô aqui 😊",
+  "alternativas": {"A": "Puxar assunto porque está com saudade", "B": "Cobrar uma resposta sobre o favor, de forma educada", "C": "Convidar você para sair", "D": "Avisar que vai viajar"},
+  "gabarito": "B",
+  "pega": "o \"alô\" é cobrança embrulhada em simpatia"},
+
+ {"id": "data-01", "task": "data_relativa", "contexto": {"hoje": "2026-03-10", "pergunta": "Que dia a pessoa vai ligar?"},
+  "mensagem": "te ligo depois de amanha sem falta",
+  "gabarito": "2026-03-12",
+  "pega": "dois dias para frente"},
+
+ {"id": "data-02", "task": "data_relativa", "contexto": {"hoje": "2026-03-10", "pergunta": "Que dia a pessoa foi ao médico?"},
+  "mensagem": "anteontem eu fui no medico e ele pediu mil exames",
+  "gabarito": "2026-03-08",
+  "pega": "dois dias para trás, que quase todo mundo confunde com ontem"},
+
+ {"id": "data-03", "task": "data_relativa", "contexto": {"hoje": "2026-12-28", "pergunta": "Que dia vocês vão resolver isso?"},
+  "mensagem": "semana que vem na segunda a gente resolve isso",
+  "gabarito": "2027-01-04",
+  "pega": "atravessa a virada do ano"},
+
+ {"id": "data-04", "task": "data_relativa", "contexto": {"hoje": "2026-02-26", "pergunta": "Que dia chega a encomenda?"},
+  "mensagem": "daqui a 5 dias chega minha encomenda",
+  "gabarito": "2026-03-03",
+  "pega": "fevereiro de 2026 tem 28 dias"},
+
+ {"id": "data-05", "task": "data_relativa", "contexto": {"hoje": "2026-05-15", "pergunta": "Que dia a pessoa vai pagar?"},
+  "mensagem": "mes que vem no mesmo dia eu te pago, prometo",
+  "gabarito": "2026-06-15",
+  "pega": "mesmo número, mês seguinte"},
+
+ {"id": "data-06", "task": "data_relativa", "contexto": {"hoje": "2026-07-04", "pergunta": "Que dia a pessoa começa?"},
+  "mensagem": "segunda que vem eu começo a academia, dessa vez vai",
+  "gabarito": "2026-07-06",
+  "pega": "hoje é sábado, então a segunda está a dois dias"},
+
+ {"id": "data-07", "task": "data_relativa", "contexto": {"hoje": "2026-10-01", "pergunta": "Que dia vence?"},
+  "mensagem": "olha q daqui a 10 dias vence viu",
+  "gabarito": "2026-10-11",
+  "pega": "contagem simples, mas dentro de mensagem torta"},
+
+ {"id": "data-08", "task": "data_relativa", "contexto": {"hoje": "2026-04-02", "pergunta": "Que dia foi o último dia?"},
+  "mensagem": "ontem foi o ultimo dia da promocao, perdeu",
+  "gabarito": "2026-04-01",
+  "pega": "um dia para trás"},
+
+ {"id": "quem-01", "task": "quem", "contexto": {"pergunta": "Quem vai levar o gelo?"},
+  "mensagem": "Ana: gente eu n posso levar nada, to sem carro\nBruno: eu levo a carne entao\nCarla: e eu levo a sobremesa\nBruno: alguem leva o gelo?\nCarla: deixa q eu passo no mercado e levo",
+  "gabarito": "Carla",
+  "pega": "quem oferece no fim já tinha oferecido outra coisa antes"},
+
+ {"id": "quem-02", "task": "quem", "contexto": {"pergunta": "Quem está com a mãe internada?"},
+  "mensagem": "Diego: o pedro falou q n vai poder ir\nElisa: serio? ele avisou pq?\nDiego: disse q a mae dele ta internada\nElisa: nossa, manda um abraço pra ele",
+  "gabarito": "Pedro",
+  "pega": "o \"ele\" atravessa três mensagens e nunca é repetido"},
+
+ {"id": "quem-03", "task": "quem", "contexto": {"pergunta": "Com quem a Juliana vai?"},
+  "mensagem": "Fernanda: eu e a juliana vamos de uber\nGabriel: eu levo meu carro, cabe mais 3\nJuliana: muda nada, eu vou com ele entao\nFernanda: ah entao eu vou sozinha de uber",
+  "gabarito": "Gabriel",
+  "pega": "o plano muda no meio da conversa"},
+
+ {"id": "quem-04", "task": "quem", "contexto": {"pergunta": "Quem está com o carregador agora?"},
+  "mensagem": "Helena: alguem pegou meu carregador?\nIgor: eu peguei ontem desculpa, devolvo hj\nHelena: blz\nIgor: na vdd foi o lucas q pegou depois de mim",
+  "gabarito": "Lucas",
+  "pega": "a resposta certa só aparece na correção da última mensagem"},
+
+ {"id": "quem-05", "task": "quem", "contexto": {"pergunta": "Quem vai fechar a conta?"},
+  "mensagem": "Marcos: quem ficou de fechar a conta?\nNatalia: era o rafael mas ele saiu mais cedo\nMarcos: e agora?\nNatalia: eu fecho e vcs me pagam depois",
+  "gabarito": "Natalia",
+  "pega": "o nome citado é justamente quem não vai fazer"},
+
+ {"id": "quem-06", "task": "quem", "contexto": {"pergunta": "Quem disse que não prometeu nada?"},
+  "mensagem": "Otavio: a paula disse q traz o projetor\nPaula: eu disse q TENTO, n prometi\nOtavio: ah ta, entendi errado entao",
+  "gabarito": "Paula",
+  "pega": "a pessoa se corrige em terceira pessoa"},
+
+ {"id": "quem-07", "task": "quem", "contexto": {"pergunta": "Quem vai ao aeroporto?"},
+  "mensagem": "Rita: o sergio vai buscar a tia dele no aeroporto\nSergio: eu n, quem vai é o tiago\nRita: ah entendi, desculpa",
+  "gabarito": "Tiago",
+  "pega": "a primeira informação é desmentida logo depois"},
+
+ {"id": "quem-08", "task": "quem", "contexto": {"pergunta": "Quem vai levar o som?"},
+  "mensagem": "Vera: a gente combinou q o william leva o som\nWilliam: combinamos nada kkkk eu disse q emprestava\nVera: e quem leva entao?\nWilliam: a yasmin falou q busca aqui em casa",
+  "gabarito": "Yasmin",
+  "pega": "emprestar não é levar, e a dona da resposta aparece só no fim"},
+
+ {"id": "contagem-01", "task": "contagem", "contexto": {"pergunta": "Quantas pessoas ficaram?"},
+  "mensagem": "a gente era em 4, ai chegaram mais 3 e dps sairam 2",
+  "gabarito": 5,
+  "pega": "três números e duas operações diferentes"},
+
+ {"id": "contagem-02", "task": "contagem", "contexto": {"pergunta": "Quantas unidades boas sobraram?"},
+  "mensagem": "comprei 3 caixas com 12 unidades cada e 5 vieram quebradas",
+  "gabarito": 31,
+  "pega": "multiplicar antes de subtrair"},
+
+ {"id": "contagem-03", "task": "contagem", "contexto": {"pergunta": "Quantas pessoas apareceram?"},
+  "mensagem": "o jogo é 5 contra 5 mas faltaram 3 pessoas no total",
+  "gabarito": 7,
+  "pega": "5 contra 5 são 10, e não 5"},
+
+ {"id": "contagem-04", "task": "contagem", "contexto": {"pergunta": "Quantas horas no total?"},
+  "mensagem": "trabalhei 8h na segunda, 6h na terca e 9h na quarta",
+  "gabarito": 23,
+  "pega": "soma simples com os dias no meio atrapalhando"},
+
+ {"id": "contagem-05", "task": "contagem", "contexto": {"pergunta": "Quantos convidados ficaram?"},
+  "mensagem": "eram 20 convidados e 25% desistiu em cima da hora",
+  "gabarito": 15,
+  "pega": "a porcentagem é de quem saiu, não de quem ficou"},
+
+ {"id": "contagem-06", "task": "contagem", "contexto": {"pergunta": "Quanto ainda falta pagar?"},
+  "mensagem": "ja paguei 3 parcelas de 80 de um total de 400",
+  "gabarito": 160,
+  "pega": "o total aparece na mensagem e é tentador responder ele"},
+
+ {"id": "contagem-07", "task": "contagem", "contexto": {"pergunta": "Quantos minutos durou o trajeto?"},
+  "mensagem": "sai de casa 7h30 e cheguei 9h15, transito absurdo",
+  "gabarito": 105,
+  "pega": "resposta em minutos, horário em horas quebradas"},
+
+ {"id": "contagem-08", "task": "contagem", "contexto": {"pergunta": "Quantas coxinhas eu comi?"},
+  "mensagem": "comprei 7 coxinhas e dividi igual entre 3 pessoas, o resto eu comi",
+  "gabarito": 1,
+  "pega": "a resposta é o resto da divisão, não o quociente"}
+]

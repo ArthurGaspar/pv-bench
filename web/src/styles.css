@@ -1,0 +1,131 @@
+/* Tela de conversa: claro por padrão, escuro quando o sistema pedir.
+   As cores de gráfico são as validadas; o verde de mensagem é só enfeite de bolha. */
+:root {
+  color-scheme: light;
+  --bg: #eceff3;
+  --panel: #ffffff;
+  --panel-2: #f4f6f9;
+  --line: #dde3ea;
+  --ink: #111826;
+  --ink-2: #47536b;
+  --ink-3: #74809a;
+  --bolha: #d9fdd3;
+  --bolha-linha: #bdf0b4;
+  --acerto: #1f7a42;
+  --erro: #c23b38;
+  --c-1: #2a78d6;
+  --c-2: #eb6834;
+  --grid: #e6eaf1;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --sombra: 0 1px 2px rgb(17 24 38 / 0.05), 0 8px 24px rgb(17 24 38 / 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d1218;
+    --panel: #161d26;
+    --panel-2: #1e2732;
+    --line: #2b3542;
+    --ink: #eef2f7;
+    --ink-2: #b3becd;
+    --ink-3: #8593a6;
+    --bolha: #1c3b2a;
+    --bolha-linha: #2a5740;
+    --acerto: #3ddc84;
+    --erro: #ff6b6b;
+    --c-1: #3987e5;
+    --c-2: #d95926;
+    --grid: #232c38;
+    --sombra: 0 8px 24px rgb(0 0 0 / 0.4);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1218;
+  --panel: #161d26;
+  --panel-2: #1e2732;
+  --line: #2b3542;
+  --ink: #eef2f7;
+  --ink-2: #b3becd;
+  --ink-3: #8593a6;
+  --bolha: #1c3b2a;
+  --bolha-linha: #2a5740;
+  --acerto: #3ddc84;
+  --erro: #ff6b6b;
+  --c-1: #3987e5;
+  --c-2: #d95926;
+  --grid: #232c38;
+  --sombra: 0 8px 24px rgb(0 0 0 / 0.4);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--c-1); }
+button { font: inherit; color: inherit; }
+code, .mono { font-family: var(--mono); font-size: 0.9em; }
+
+.top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 10px 20px; background: color-mix(in srgb, var(--panel) 93%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.marca { display: flex; align-items: baseline; gap: 10px; margin-right: auto; text-decoration: none; color: var(--ink); }
+.marca b { font-size: 16px; }
+.marca span { color: var(--ink-3); font-size: 13px; }
+nav { display: flex; gap: 2px; overflow-x: auto; }
+nav a { text-decoration: none; color: var(--ink-2); padding: 6px 12px; border-radius: 7px; white-space: nowrap; }
+nav a[aria-current="page"] { color: var(--ink); background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
+.tema { border: 1px solid var(--line); background: var(--panel); border-radius: 7px; padding: 5px 10px; cursor: pointer; }
+
+main { max-width: 1080px; margin: 0 auto; padding: 24px 20px 72px; display: flex; flex-direction: column; gap: 24px; }
+h1 { font-size: 27px; margin: 0 0 8px; letter-spacing: -0.02em; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin: 0 0 12px; font-weight: 600; }
+h3 { margin: 0 0 6px; font-size: 16px; }
+p { margin: 0 0 10px; color: var(--ink-2); max-width: 76ch; }
+.peq { font-size: 13px; color: var(--ink-3); }
+.painel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.linha { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 14px 16px; }
+.tile .v { font-size: 25px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.tile .l { font-size: 13px; color: var(--ink-2); }
+.tile .s { font-size: 12px; color: var(--ink-3); }
+
+/* Bolha de mensagem, que é o objeto central do benchmark */
+.bolha { background: var(--bolha); border: 1px solid var(--bolha-linha); border-radius: 12px 12px 12px 3px; padding: 10px 13px; white-space: pre-wrap; word-break: break-word; max-width: 54ch; font-size: 14.5px; color: var(--ink); }
+.bolha.ctx { background: var(--panel-2); border-color: var(--line); border-radius: 12px; color: var(--ink-2); font-size: 13px; max-width: none; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+th { text-align: left; color: var(--ink-3); font-weight: 600; padding: 8px; border-bottom: 1px solid var(--line); }
+td { padding: 8px; border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); vertical-align: top; }
+.num { text-align: right; }
+tr.clicavel { cursor: pointer; }
+tr.clicavel:hover td { background: var(--panel-2); }
+
+.selo { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
+.selo.ok { color: var(--acerto); }
+.selo.nao { color: var(--erro); }
+.selo.neutro { color: var(--ink-3); font-weight: 400; }
+
+.filtros { display: inline-flex; gap: 2px; padding: 3px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--line); flex-wrap: wrap; }
+.filtros button { border: 0; background: transparent; padding: 5px 11px; border-radius: 7px; cursor: pointer; color: var(--ink-2); font-size: 13.5px; }
+.filtros button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+
+.grafico text { fill: var(--ink-3); font-size: 11px; font-family: Inter, system-ui, sans-serif; }
+.grafico .grade { stroke: var(--grid); }
+.dica { position: fixed; pointer-events: none; z-index: 30; background: var(--panel); border: 1px solid var(--line); border-radius: 7px; padding: 6px 9px; font-size: 12px; box-shadow: var(--sombra); max-width: 280px; }
+
+.aviso { border-left: 3px solid var(--c-2); background: var(--panel-2); padding: 12px 14px; border-radius: 0 9px 9px 0; }
+.vazio { text-align: center; padding: 56px 16px; color: var(--ink-3); }
+.resp { background: var(--panel-2); border: 1px solid var(--line); border-radius: 9px; padding: 9px 11px; font-family: var(--mono); font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }
+.legenda { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); }
+.amostra { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid var(--line); }
+
+@media (max-width: 640px) {
+  .top { padding: 8px 16px; }
+  .marca span { display: none; }
+  nav { order: 3; width: 100%; }
+  main { padding: 16px 16px 56px; }
+  h1 { font-size: 22px; }
+  .esconde-peq { display: none; }
+}

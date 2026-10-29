@@ -1,0 +1,671 @@
+{
+ "modelo": "ollama/qwen2.5-coder:7b",
+ "rodadoEm": "2026-10-29T13:10:08+00:00",
+ "segundos": 381.5,
+ "respostas": [
+  {
+   "id": "compromisso-01",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2026-03-15\", \"hora\": \"15:00\"}",
+   "segundos": 98.06,
+   "extraido": {
+    "data": "2026-03-15",
+    "hora": "15:00"
+   },
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-02",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2026-03-11\", \"hora\": \"09:00\"}",
+   "segundos": 6.85,
+   "extraido": {
+    "data": "2026-03-11",
+    "hora": "09:00"
+   },
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-03",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2026-06-06\", \"hora\": \"19:30\"}",
+   "segundos": 8.27,
+   "extraido": {
+    "data": "2026-06-06",
+    "hora": "19:30"
+   },
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-04",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2026-06-06\", \"hora\": \"20:00\"}",
+   "segundos": 9.51,
+   "extraido": {
+    "data": "2026-06-06",
+    "hora": "20:00"
+   },
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-05",
+   "task": "compromisso",
+   "bruto": "```json\n{\"data\": \"2026-02-03\", \"hora\": \"14:00\"}\n```",
+   "segundos": 10.85,
+   "extraido": {
+    "data": "2026-02-03",
+    "hora": "14:00"
+   },
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-06",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2026-09-14\", \"hora\": \"13:30\"}",
+   "segundos": 10.41,
+   "extraido": {
+    "data": "2026-09-14",
+    "hora": "13:30"
+   },
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-07",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2026-09-19\", \"hora\": \"10:00\"}",
+   "segundos": 8.95,
+   "extraido": {
+    "data": "2026-09-19",
+    "hora": "10:00"
+   },
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "compromisso-08",
+   "task": "compromisso",
+   "bruto": "{\"data\": \"2027-12-01\", \"hora\": \"08:00\"}",
+   "segundos": 10.09,
+   "extraido": {
+    "data": "2027-12-01",
+    "hora": "08:00"
+   },
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-01",
+   "task": "valor",
+   "bruto": "1500.00",
+   "segundos": 5.97,
+   "extraido": 1500.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-02",
+   "task": "valor",
+   "bruto": "1234.56",
+   "segundos": 3.65,
+   "extraido": 1234.56,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-03",
+   "task": "valor",
+   "bruto": "87.90",
+   "segundos": 3.35,
+   "extraido": 87.9,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-04",
+   "task": "valor",
+   "bruto": "60.00",
+   "segundos": 3.18,
+   "extraido": 60.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-05",
+   "task": "valor",
+   "bruto": "2500.00",
+   "segundos": 3.69,
+   "extraido": 2500.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-06",
+   "task": "valor",
+   "bruto": "44.91",
+   "segundos": 3.33,
+   "extraido": 44.91,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-07",
+   "task": "valor",
+   "bruto": "80.00",
+   "segundos": 3.17,
+   "extraido": 80.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "valor-08",
+   "task": "valor",
+   "bruto": "22.50",
+   "segundos": 3.51,
+   "extraido": 22.5,
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-01",
+   "task": "intencao",
+   "bruto": "spam",
+   "segundos": 4.06,
+   "extraido": "spam",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-02",
+   "task": "intencao",
+   "bruto": "convite",
+   "segundos": 3.75,
+   "extraido": "convite",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-03",
+   "task": "intencao",
+   "bruto": "reclamacao",
+   "segundos": 4.22,
+   "extraido": "reclamacao",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-04",
+   "task": "intencao",
+   "bruto": "cancelamento",
+   "segundos": 3.74,
+   "extraido": "cancelamento",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-05",
+   "task": "intencao",
+   "bruto": "cobranca",
+   "segundos": 3.79,
+   "extraido": "cobranca",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-06",
+   "task": "intencao",
+   "bruto": "confirmacao",
+   "segundos": 3.37,
+   "extraido": "confirmacao",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-07",
+   "task": "intencao",
+   "bruto": "favor",
+   "segundos": 3.48,
+   "extraido": "favor",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "intencao-08",
+   "task": "intencao",
+   "bruto": "reclamacao",
+   "segundos": 4.22,
+   "extraido": "reclamacao",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-01",
+   "task": "resposta",
+   "bruto": "aceitou",
+   "segundos": 4.63,
+   "extraido": "aceitou",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-02",
+   "task": "resposta",
+   "bruto": "aceitou",
+   "segundos": 3.43,
+   "extraido": "aceitou",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-03",
+   "task": "resposta",
+   "bruto": "talvez",
+   "segundos": 3.41,
+   "extraido": "talvez",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-04",
+   "task": "resposta",
+   "bruto": "recusou",
+   "segundos": 3.48,
+   "extraido": "recusou",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-05",
+   "task": "resposta",
+   "bruto": "aceitou",
+   "segundos": 3.51,
+   "extraido": "aceitou",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-06",
+   "task": "resposta",
+   "bruto": "recusou",
+   "segundos": 3.33,
+   "extraido": "recusou",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-07",
+   "task": "resposta",
+   "bruto": "recusou",
+   "segundos": 3.98,
+   "extraido": "recusou",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "resposta-08",
+   "task": "resposta",
+   "bruto": "talvez",
+   "segundos": 3.43,
+   "extraido": "talvez",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-01",
+   "task": "pedido",
+   "bruto": "C)",
+   "segundos": 4.26,
+   "extraido": "C",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-02",
+   "task": "pedido",
+   "bruto": "A)",
+   "segundos": 4.4,
+   "extraido": "A",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-03",
+   "task": "pedido",
+   "bruto": "D)",
+   "segundos": 4.36,
+   "extraido": "D",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-04",
+   "task": "pedido",
+   "bruto": "B)",
+   "segundos": 4.16,
+   "extraido": "B",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-05",
+   "task": "pedido",
+   "bruto": "C)",
+   "segundos": 4.62,
+   "extraido": "C",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-06",
+   "task": "pedido",
+   "bruto": "A)",
+   "segundos": 4.39,
+   "extraido": "A",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-07",
+   "task": "pedido",
+   "bruto": "D) Elogiar a comida deixando claro que quer provar",
+   "segundos": 6.5,
+   "extraido": "D",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "pedido-08",
+   "task": "pedido",
+   "bruto": "B)",
+   "segundos": 6.56,
+   "extraido": "B",
+   "acertou": true,
+   "formato_ok": false,
+   "erro_formato": null
+  },
+  {
+   "id": "data-01",
+   "task": "data_relativa",
+   "bruto": "2026-03-11",
+   "segundos": 5.45,
+   "extraido": "2026-03-11",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-02",
+   "task": "data_relativa",
+   "bruto": "2026-03-08",
+   "segundos": 3.69,
+   "extraido": "2026-03-08",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-03",
+   "task": "data_relativa",
+   "bruto": "2027-01-02",
+   "segundos": 4.77,
+   "extraido": "2027-01-02",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-04",
+   "task": "data_relativa",
+   "bruto": "2026-03-01",
+   "segundos": 4.97,
+   "extraido": "2026-03-01",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-05",
+   "task": "data_relativa",
+   "bruto": "2027-05-15",
+   "segundos": 4.93,
+   "extraido": "2027-05-15",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-06",
+   "task": "data_relativa",
+   "bruto": "2026-07-10",
+   "segundos": 4.82,
+   "extraido": "2026-07-10",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-07",
+   "task": "data_relativa",
+   "bruto": "2026-10-11",
+   "segundos": 4.76,
+   "extraido": "2026-10-11",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "data-08",
+   "task": "data_relativa",
+   "bruto": "2026-03-31",
+   "segundos": 4.94,
+   "extraido": "2026-03-31",
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-01",
+   "task": "quem",
+   "bruto": "Carla",
+   "segundos": 4.0,
+   "extraido": "Carla",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-02",
+   "task": "quem",
+   "bruto": "Pedro",
+   "segundos": 3.45,
+   "extraido": "Pedro",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-03",
+   "task": "quem",
+   "bruto": "Gabriel",
+   "segundos": 3.52,
+   "extraido": "Gabriel",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-04",
+   "task": "quem",
+   "bruto": "Lucas",
+   "segundos": 3.55,
+   "extraido": "Lucas",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-05",
+   "task": "quem",
+   "bruto": "Natalia",
+   "segundos": 3.59,
+   "extraido": "Natalia",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-06",
+   "task": "quem",
+   "bruto": "Paula",
+   "segundos": 3.16,
+   "extraido": "Paula",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-07",
+   "task": "quem",
+   "bruto": "Tiago",
+   "segundos": 3.11,
+   "extraido": "Tiago",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "quem-08",
+   "task": "quem",
+   "bruto": "Yasmin",
+   "segundos": 3.63,
+   "extraido": "Yasmin",
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-01",
+   "task": "contagem",
+   "bruto": "5",
+   "segundos": 2.26,
+   "extraido": 5.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-02",
+   "task": "contagem",
+   "bruto": "30.0",
+   "segundos": 3.08,
+   "extraido": 30.0,
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-03",
+   "task": "contagem",
+   "bruto": "2.0",
+   "segundos": 2.61,
+   "extraido": 2.0,
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-04",
+   "task": "contagem",
+   "bruto": "23.0",
+   "segundos": 2.91,
+   "extraido": 23.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-05",
+   "task": "contagem",
+   "bruto": "15",
+   "segundos": 2.75,
+   "extraido": 15.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-06",
+   "task": "contagem",
+   "bruto": "200.00",
+   "segundos": 3.39,
+   "extraido": 200.0,
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-07",
+   "task": "contagem",
+   "bruto": "120.0",
+   "segundos": 3.37,
+   "extraido": 120.0,
+   "acertou": false,
+   "formato_ok": true,
+   "erro_formato": null
+  },
+  {
+   "id": "contagem-08",
+   "task": "contagem",
+   "bruto": "1.0",
+   "segundos": 2.89,
+   "extraido": 1.0,
+   "acertou": true,
+   "formato_ok": true,
+   "erro_formato": null
+  }
+ ]
+}
