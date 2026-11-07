@@ -1,110 +1,96 @@
-# Deu pra entender?
+# Recado bench
 
-Um benchmark de português brasileiro de verdade: testa se um modelo entende mensagem de brasileiro como ela chega no
-celular, com abreviação sem vogal, erro de digitação, emoji no lugar de palavra, ironia e pedido que ninguém faz com
-todas as letras.
+Um caderno de avaliação de compreensão de mensagens em português brasileiro informal: abreviações, pedidos indiretos, valores, datas e contas dentro de uma conversa.
 
-São **64 itens em 8 tarefas**, cada um com **uma resposta certa só, conferida por regra**. Não tem modelo dando nota
-para modelo, então a mesma rodada dá sempre o mesmo número e qualquer pessoa pode repetir.
+**64 itens · 8 tarefas · correção por regra · respostas brutas publicadas**
 
-**Site:** https://arthurgaspar.github.io/pv-bench/
+[Explorar as rodadas](https://arthurgaspar.github.io/pv-bench/)
 
-![O placar](docs/placar.png)
+![Visão geral do Recado bench](docs/placar.png)
 
-## O que já deu
+## Usar o caderno
 
-Rodado nos dois modelos que eu tinha na máquina, de graça, via Ollama. O benchmark é o produto aqui; estes dois são só
-os primeiros em que ele foi apontado.
+- **Visão geral:** resultados por modelo e matriz de acerto ou formato. Cada marca abre o item correspondente.
+- **Inspecionar:** busca por mensagem, ID, observação ou resposta; filtros por tarefa, modelo, erro, divergência e formato. O endereço preserva o recorte para compartilhar.
+- **Exportar CSV:** baixa as respostas do recorte atual, com gabarito, texto original, valor extraído e tempo.
+- **Conjunto e método:** exemplos com contexto, critérios de correção e registro das rodadas.
 
-| Modelo | Acertos | Formato limpo | Seg. por item |
+![Inspeção de um item e comparação das respostas](docs/respostas.png)
+
+## Rodadas incluídas
+
+Executadas localmente via Ollama em 29/10/2026. O tempo depende da máquina e das condições da execução.
+
+| Modelo | Acertos | Formato limpo | Tempo / item |
 |---|---|---|---|
-| qwen2.5-coder:7b | 43/64 (67%) | 88% | 6,0s |
-| qwen2.5:7b | 42/64 (66%) | 100% | 4,9s |
+| qwen2.5-coder:7b | 43/64 (67%) | 88% | 6,0 s |
+| qwen2.5:7b | 42/64 (66%) | 100% | 4,9 s |
 
-O placar quase empata, e o interessante não é ele. É **onde** cada um erra:
+Os dois acertaram os oito itens de pedido indireto e os oito de resolução de nomes. Cada um acertou apenas dois dos oito compromissos. Em 15 itens, ambos erraram; em 13, os resultados diferem. A mensagem “fechouuu”, por exemplo, foi classificada como recusa pelos dois.
 
-| Tarefa | Acertos (os dois somados) |
-|---|---|
-| O que ela quer de verdade (pedido indireto) | 16/16 (100%) |
-| Quem ficou de fazer (resolver pronome) | 16/16 (100%) |
-| Para que serve a mensagem | 14/16 (88%) |
-| Entender o valor | 13/16 (81%) |
-| Aceitou ou enrolou | 11/16 (69%) |
-| A conta no meio da conversa | 6/16 (38%) |
-| Que dia é esse | 5/16 (31%) |
-| Combinar um encontro | 4/16 (25%) |
+Esses achados descrevem as rodadas incluídas. Um item vale 1,5625 ponto percentual; a diferença de um acerto não sustenta uma conclusão geral sobre os modelos.
 
-**Os dois entendem o brasileiro e tropeçam na conta.** Pedido indireto ("nossa que calor né kkkk" dentro do carro) e
-pronome perdido no meio do grupo saem perfeitos. Já "depois de amanhã" e "meio dia e meia de quarta" derrubam os dois:
-15 dos 64 itens nenhum dos dois acertou, e quase todos são data, hora ou continha.
+## Executar
 
-Dois achados que valem olhar com calma:
+Python 3.12 e Node.js 22. Para execução local, instale o Ollama e baixe o modelo escolhido. A montagem do site e os testes não chamam modelos.
 
-- **"fechouuu" foi lido como recusa** pelos dois modelos. É das palavras mais claras de aceite que existem em português
-  brasileiro, e nenhum dos dois pegou.
-- **O modelo de código acerta um pouco mais e obedece bastante menos.** Ele ganha na continha (4/8 contra 2/8) mas
-  entrega o formato pedido em 88% das vezes, contra 100% do modelo geral, que nunca enfeitou uma resposta.
-
-Com 64 itens, cada item vale 1,6 ponto percentual: dá para ver tendência e tropeço, não para cravar ranking.
-
-## Como a correção funciona
-
-Duas coisas são medidas de propósito em colunas separadas:
-
-- **Acerto**: a resposta, depois de extraída do texto, bate com o gabarito. A extração é tolerante porque a pergunta é
-  se o modelo entendeu a mensagem, não se ele obedeceu.
-- **Formato limpo**: a resposta já veio exatamente como foi pedido, sem frase em volta e sem markdown.
-
-Um detalhe que só aparece em português: **"1.500" é mil e quinhentos e "1,5" é um e meio.** O corretor lê os dois
-formatos, o brasileiro e o inglês, decidindo pelo separador que aparece por último. Em item com mais de um campo (dia
-*e* hora), acerto exige os dois: não há crédito parcial.
-
-## Rodar nos seus modelos
-
-O runner usa **LiteLLM**, então serve qualquer provedor que ele atenda. O padrão é Ollama na própria máquina, porque
-assim rodar não custa nada.
-
-```bash
+```powershell
 python -m venv .venv
-.venv/Scripts/activate            # Windows; `source .venv/bin/activate` no resto
+.venv/Scripts/Activate.ps1
+# No Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
 
-python -m bench.run --modelos ollama/llama3.2:3b    # local, de graça
-python -m bench.run --tarefas valor contagem        # só algumas tarefas
-python -m bench.build                               # monta o JSON do site
-python -m pytest                                    # 36 testes do harness
+# Opcional: gerar uma nova rodada com um modelo instalado
+python -m bench.run --modelos ollama/qwen2.5:7b
 
-cd web && npm install && npm run dev
+# Conferir e montar os resultados versionados
+python -m pytest -q
+python -m bench.build
+
+cd web
+npm ci
+npm run dev
 ```
 
-Para um provedor pago, basta ter a chave no ambiente: `python -m bench.run --modelos gpt-4o-mini`. Cada rodada cai em
-`data/resultados/<modelo>.json`, com a resposta crua de cada item.
+`python -m bench.run --tarefas valor contagem` limita a execução a essas tarefas. Rodadas parciais ficam fora do placar. Uma nova execução do mesmo modelo substitui seu arquivo em `data/resultados/`.
 
-## Como está organizado
+Outros provedores podem ser usados pelo LiteLLM, configurando a chave no ambiente e passando o nome com `--modelos`. Isso pode gerar cobrança do provedor.
 
+Para compilar o site: `cd web` e `npm run build`. O GitHub Actions testa o harness e publica o site a partir dos resultados versionados.
+
+## Correção e integridade
+
+**Acerto** compara o valor extraído com o gabarito. A extração tolera texto adicional. Respostas com vários campos precisam acertar todos; não há crédito parcial.
+
+**Formato limpo** verifica o formato aceito pelo parser, separadamente do acerto. Espaços externos e cercas de Markdown são removidos antes da verificação. Uma resposta errada pode ter formato limpo.
+
+O parser numérico aceita formatos brasileiros e ingleses: `1.500` é interpretado como 1500; `1,5`, como 1.5. Os detalhes da extração estão em `bench/grade.py`.
+
+A montagem recalcula as notas a partir das respostas brutas, verifica a identidade e a tarefa de cada item e rejeita duplicatas de itens ou modelos. Apenas rodadas com cobertura exata do conjunto entram no site. Novas execuções preservam o texto completo retornado pelo modelo.
+
+Os testes cobrem parsers, coerência dos gabaritos, distribuição das alternativas e integridade das rodadas publicadas.
+
+## Estrutura
+
+```text
+bench/tasks.py      prompts e tipos de resposta das oito tarefas
+bench/grade.py      extração e comparação com o gabarito
+bench/dataset.py    carregamento e validação dos itens
+bench/run.py        execução via LiteLLM e gravação das respostas
+bench/build.py      validação das rodadas e geração do JSON do site
+data/items.json     conjunto manual versionado
+data/resultados/    rodadas incluídas no projeto
+web/src/            interface React e estilos
+tests/              testes do corretor, conjunto e publicação
 ```
-bench/tasks.py      as 8 tarefas: o prompt e o tipo de resposta de cada uma
-bench/grade.py      o corretor: extrai a resposta do texto e confere com o gabarito
-bench/dataset.py    carrega e confere os itens antes de qualquer rodada
-bench/run.py        chama o modelo via LiteLLM e grava resposta crua + correção
-bench/build.py      junta tudo num JSON para o site (offline, é o que o CI roda)
-data/items.json     os 64 itens, versionados
-data/resultados/    uma rodada por modelo, versionada
-web/                o site: placar, todas as respostas, tarefas e método
-```
 
-O conjunto se confere sozinho nos testes: ids únicos, rótulo dentro da lista da tarefa, todo prompt montando, e
-**todo gabarito passando pelo próprio corretor**: se eu escrever um gabarito que o corretor não aceita, o teste quebra.
-Também testa que as alternativas não ficam todas na mesma letra, senão um modelo que responde sempre "B" gabaritava.
+## Limites
 
-## O que este número não é
+- Mensagens sintéticas escritas à mão, sem amostragem representativa de conversas, regiões ou grupos sociais.
+- Uma tentativa por item, temperatura zero, sem estimativa da variação entre execuções.
+- Respostas curtas e verificáveis; o teste não avalia escrita, diálogo aberto ou toda a compreensão do português.
+- O parser também pode falhar. Prompts, respostas brutas e valores extraídos permitem examinar a correção.
+- Itens públicos podem aparecer em dados de treino futuros.
+- Tempos sem controle de hardware; não são um ranking de velocidade.
 
-- **São itens escritos à mão.** Imitam mensagem real, mas não foram coletados de conversa de ninguém, porque conversa de
-  verdade é dado pessoal.
-- **Temperatura zero, uma tentativa por item.** Sem média de várias rodadas, um empate técnico pode virar um ponto de
-  diferença por acaso.
-- **Não mede escrita, só compreensão.** Todas as respostas são curtas e verificáveis.
-- **Os itens estão publicados.** Bom para auditar, ruim para o futuro: uma vez na internet, podem acabar em treino de
-  alguém e deixar de medir o que mediam.
-- **O CI não roda modelo.** Ele roda os testes e monta o site a partir das rodadas versionadas, porque não tem GPU e não
-  deve gastar nada.
+Criado por [Arthur Gaspar](https://github.com/arthurgaspar).

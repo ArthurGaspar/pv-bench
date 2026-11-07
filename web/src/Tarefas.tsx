@@ -1,58 +1,72 @@
-import { carregar, gabaritoTexto, type Benchmark } from "./dados";
+import { carregar, gabaritoTexto, linkRespostas } from "./dados";
 import { Vazio, useDados } from "./ui";
 
 const TIPO: Record<string, string> = {
-  json: "um objeto JSON com campos fixos",
-  numero: "um número",
-  rotulo: "um rótulo de uma lista fechada",
-  data: "uma data AAAA-MM-DD",
-  alternativa: "a letra de uma alternativa",
-  nome: "um primeiro nome",
+  json: "JSON",
+  numero: "Número",
+  rotulo: "Rótulo",
+  data: "Data ISO",
+  alternativa: "Alternativa",
+  nome: "Nome",
 };
 
 export function Tarefas() {
-  const { dados, erro } = useDados<Benchmark>(carregar);
-  if (erro) return <Vazio titulo="Sem dados ainda">{erro}</Vazio>;
-  if (!dados) return <Vazio titulo="Carregando…" />;
-
+  const { dados, erro } = useDados(carregar);
+  if (erro)
+    return <Vazio titulo="Não foi possível carregar o conjunto">{erro}</Vazio>;
+  if (!dados) return <Vazio titulo="Lendo o conjunto…" />;
   return (
     <>
-      <section>
-        <h1>As tarefas</h1>
+      <section className="pagina-intro">
+        <p className="sobretitulo">Caderno / Conjunto</p>
+        <h1>Oito jeitos de perder o fio.</h1>
         <p>
-          Oito tipos de mensagem que todo brasileiro recebe e responde sem pensar, e que exigem do modelo mais do que
-          traduzir palavra por palavra. Cada tarefa pede uma resposta de um formato só, para que a correção seja mecânica.
+          {dados.itens.length} mensagens sintéticas, escritas em português
+          brasileiro informal. Cada tarefa isola um tipo de interpretação e
+          exige uma resposta curta.
         </p>
       </section>
-
-      {dados.tarefas.map((t) => {
-        const exemplos = dados.itens.filter((i) => i.task === t.id);
-        const exemplo = exemplos[0];
-        return (
-          <section className="painel" key={t.id}>
-            <div className="linha" style={{ justifyContent: "space-between" }}>
-              <h3 style={{ margin: 0 }}>{t.titulo}</h3>
-              <span className="peq">
-                {exemplos.length} itens · resposta é {TIPO[t.tipo] ?? t.tipo}
-              </span>
-            </div>
-            <p style={{ margin: "6px 0 12px" }}>{t.descricao}</p>
-            {t.rotulos.length > 0 && (
-              <p className="peq" style={{ marginTop: -6 }}>
-                Rótulos possíveis: {t.rotulos.join(", ")}.
+      <div className="tarefas-lista">
+        {dados.tarefas.map((t, n) => {
+          const itens = dados.itens.filter((i) => i.task === t.id);
+          const exemplo = itens[0];
+          return (
+            <section className="tarefa" key={t.id}>
+              <p className="sobretitulo">
+                {String(n + 1).padStart(2, "0")} / {t.id}
               </p>
-            )}
-            {exemplo && (
-              <>
-                <div className="bolha">{exemplo.mensagem}</div>
-                <p className="peq" style={{ margin: "8px 0 0" }}>
-                  <b>Certo:</b> {gabaritoTexto(exemplo.gabarito)} · <b>Por que pega:</b> {exemplo.pega}
-                </p>
-              </>
-            )}
-          </section>
-        );
-      })}
+              <h2>{t.titulo}</h2>
+              <div className="tarefa-meta">
+                <span>{itens.length} itens</span>
+                <span>Resposta: {TIPO[t.tipo] ?? t.tipo}</span>
+              </div>
+              <p>{t.descricao}</p>
+              {t.rotulos.length > 0 && (
+                <p className="peq">Rótulos: {t.rotulos.join(" · ")}</p>
+              )}
+              {exemplo && (
+                <>
+                  <p className="contexto">
+                    {Object.entries(exemplo.contexto)
+                      .map(([k, v]) => `${k}: ${v}`)
+                      .join(" · ")}
+                  </p>
+                  <blockquote className="mensagem">
+                    “{exemplo.mensagem}”
+                  </blockquote>
+                  <p className="peq">
+                    Gabarito: <b>{gabaritoTexto(exemplo.gabarito)}</b>
+                  </p>
+                </>
+              )}
+              <a className="link-seta" href={linkRespostas({ tarefa: t.id })}>
+                Inspecionar os {itens.length} itens{" "}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </section>
+          );
+        })}
+      </div>
     </>
   );
 }

@@ -7,14 +7,44 @@ escreve web/public/data. É o passo que o CI roda, já que o CI não tem modelo.
 """
 
 import json
-from collections import defaultdict
 from datetime import datetime, timezone
 
 from .dataset import RAIZ, carregar
+from .grade import corrigir
 from .tasks import TASKS
 
 RESULTADOS = RAIZ / "data" / "resultados"
 SAIDA = RAIZ / "web" / "public" / "data"
+
+
+def preparar_rodadas(rodadas: list[dict], itens: list[dict]) -> list[dict]:
+    por_id = {i["id"]: i for i in itens}
+    modelos: set[str] = set()
+    completas = []
+    for rodada in rodadas:
+        modelo = rodada["modelo"]
+        if modelo in modelos:
+            raise ValueError(f"modelo repetido: {modelo}")
+        modelos.add(modelo)
+        vistos: set[str] = set()
+        respostas = []
+        for resposta in rodada["respostas"]:
+            id_ = resposta["id"]
+            if id_ in vistos:
+                raise ValueError(f"{modelo}: item repetido {id_}")
+            vistos.add(id_)
+            if id_ not in por_id:
+                raise ValueError(f"{modelo}: item desconhecido {id_}")
+            item = por_id[id_]
+            if resposta["task"] != item["task"]:
+                raise ValueError(f"{modelo}: tarefa inconsistente em {id_}")
+            resultado = corrigir(item, resposta["bruto"])
+            if not resposta["bruto"] and resposta.get("erro_formato"):
+                resultado["erro_formato"] = resposta["erro_formato"]
+            respostas.append({**resposta, **resultado})
+        if vistos == set(por_id):
+            completas.append({**rodada, "respostas": respostas})
+    return completas
 
 
 def escrever(nome: str, dados) -> None:
@@ -30,16 +60,12 @@ def main() -> None:
     if not arquivos:
         raise SystemExit("Sem resultados em data/resultados; rode `python -m bench.run` primeiro.")
     rodadas = [json.loads(f.read_text(encoding="utf-8")) for f in arquivos]
-    # Uma rodada parcial (só algumas tarefas) não entra no placar, para não inflar porcentagem.
-    completas = [r for r in rodadas if len(r["respostas"]) == len(itens)]
+    completas = preparar_rodadas(rodadas, itens)
     if not completas:
         raise SystemExit("Nenhuma rodada cobriu todos os itens; rode `python -m bench.run` sem --tarefas.")
 
     placar = []
     for r in completas:
-        por_task: dict[str, list[bool]] = defaultdict(list)
-        for resposta in r["respostas"]:
-            por_task[resposta["task"]].append(resposta["acertou"])
         placar.append(
             {
                 "modelo": r["modelo"],
@@ -49,7 +75,6 @@ def main() -> None:
                 "total": len(r["respostas"]),
                 "formatoOk": sum(x["formato_ok"] for x in r["respostas"]),
                 "segundosPorItem": round(r["segundos"] / max(1, len(r["respostas"])), 2),
-                "porTarefa": {t: {"acertos": sum(v), "total": len(v)} for t, v in sorted(por_task.items())},
             }
         )
     placar.sort(key=lambda p: (-p["acertos"], p["segundosPorItem"]))
@@ -82,7 +107,6 @@ def main() -> None:
             ],
             "placar": placar,
             "respostas": respostas,
-            "itensPorTarefa": {t: sum(1 for i in itens if i["task"] == t) for t in TASKS},
         },
     )
     for p in placar:

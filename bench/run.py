@@ -1,6 +1,6 @@
 """Roda o benchmark em um ou mais modelos.
 
-    python -m bench.run                                  # os modelos do config
+    python -m bench.run                                  # os modelos padrão
     python -m bench.run --modelos ollama/qwen2.5:7b      # só um
     python -m bench.run --tarefas valor contagem         # só algumas tarefas
 
@@ -74,7 +74,7 @@ def rodar(modelo: str, itens: list[dict], log=print) -> dict:
             "extraido": None, "acertou": False, "formato_ok": False, "erro_formato": erro,
         }
         acertos += resultado["acertou"]
-        respostas.append({"id": item["id"], "task": item["task"], "bruto": bruto[:600], "segundos": round(segundos, 2), **resultado})
+        respostas.append({"id": item["id"], "task": item["task"], "bruto": bruto, "segundos": round(segundos, 2), **resultado})
         if n % 8 == 0 or n == len(itens):
             log(f"    {n:3d}/{len(itens)}  acertos {acertos}")
     return {

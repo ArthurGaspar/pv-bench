@@ -4,71 +4,104 @@ import { Placar } from "./Placar";
 import { Respostas } from "./Respostas";
 import { Tarefas } from "./Tarefas";
 
-type Tema = "sistema" | "claro" | "escuro";
-
+type Tema = "claro" | "escuro";
 const PAGINAS = [
-  { hash: "#/", rotulo: "Placar" },
-  { hash: "#/respostas", rotulo: "Respostas" },
-  { hash: "#/tarefas", rotulo: "Tarefas" },
-  { hash: "#/metodo", rotulo: "Como funciona" },
+  { hash: "#/", rotulo: "Visão geral" },
+  { hash: "#/respostas", rotulo: "Inspecionar" },
+  { hash: "#/tarefas", rotulo: "Conjunto" },
+  { hash: "#/metodo", rotulo: "Método" },
 ];
 
 export function App() {
   const [hash, setHash] = useState(location.hash || "#/");
   const [tema, setTema] = useState<Tema>(() => {
     try {
-      return (localStorage.getItem("pv-tema") as Tema) || "sistema";
+      return localStorage.getItem("recado-tema") === "escuro"
+        ? "escuro"
+        : "claro";
     } catch {
-      return "sistema";
+      return "claro";
     }
   });
-
   useEffect(() => {
-    const aoMudar = () => {
+    const mudar = (e: HashChangeEvent) => {
       setHash(location.hash || "#/");
-      window.scrollTo(0, 0);
+      if (
+        new URL(e.oldURL).hash.split("?")[0] !==
+        new URL(e.newURL).hash.split("?")[0]
+      )
+        window.scrollTo(0, 0);
     };
-    window.addEventListener("hashchange", aoMudar);
-    return () => window.removeEventListener("hashchange", aoMudar);
+    window.addEventListener("hashchange", mudar);
+    return () => window.removeEventListener("hashchange", mudar);
   }, []);
-
   useEffect(() => {
-    if (tema === "sistema") document.documentElement.removeAttribute("data-theme");
-    else document.documentElement.setAttribute("data-theme", tema === "claro" ? "light" : "dark");
+    document.documentElement.dataset.theme = tema;
     try {
-      localStorage.setItem("pv-tema", tema);
+      localStorage.setItem("recado-tema", tema);
     } catch {
-      // sem storage o tema vale só para esta visita
+      /* Tema da visita. */
     }
   }, [tema]);
-
-  const caminho = (hash.split("?")[0] || "#/") as string;
+  const caminho = hash.split("?")[0];
   const pagina = PAGINAS.some((p) => p.hash === caminho) ? caminho : "#/";
 
   return (
     <>
+      <a
+        className="pular"
+        href="#conteudo"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("conteudo")?.focus();
+        }}
+      >
+        Pular para o conteúdo
+      </a>
       <header className="top">
-        <a className="marca" href="#/">
-          <b>Deu pra entender?</b>
-          <span>benchmark de português brasileiro de verdade</span>
+        <a className="marca" href="#/" aria-label="Recado bench, início">
+          <span className="marca-sinal" aria-hidden="true">
+            r<span>↗</span>
+          </span>
+          <span>
+            recado<span className="marca-bench">/ bench</span>
+          </span>
         </a>
-        <nav>
-          {PAGINAS.map((p) => (
-            <a key={p.hash} href={p.hash} aria-current={pagina === p.hash ? "page" : undefined}>
+        <nav aria-label="Navegação principal">
+          {PAGINAS.map((p, n) => (
+            <a
+              key={p.hash}
+              href={p.hash}
+              aria-current={pagina === p.hash ? "page" : undefined}
+            >
+              <span className="nav-num">0{n + 1}</span>
               {p.rotulo}
             </a>
           ))}
         </nav>
-        <button className="tema" onClick={() => setTema((t) => (t === "sistema" ? "claro" : t === "claro" ? "escuro" : "sistema"))} aria-label={`Tema: ${tema}`}>
-          {tema === "sistema" ? "Auto" : tema === "claro" ? "Claro" : "Escuro"}
+        <button
+          className="tema"
+          onClick={() => setTema((t) => (t === "claro" ? "escuro" : "claro"))}
+          aria-label={`Ativar tema ${tema === "claro" ? "escuro" : "claro"}`}
+        >
+          {tema === "claro" ? "◐" : "◑"}
         </button>
       </header>
-      <main>
+      <main id="conteudo" tabIndex={-1}>
         {pagina === "#/" && <Placar />}
         {pagina === "#/respostas" && <Respostas />}
         {pagina === "#/tarefas" && <Tarefas />}
         {pagina === "#/metodo" && <Metodo />}
       </main>
+      <footer>
+        <a className="marca" href="#/">
+          recado / bench
+        </a>
+        <span>
+          Feito por Arthur Gaspar · mensagens sintéticas, respostas reais.
+        </span>
+        <a href="https://github.com/arthurgaspar/pv-bench">Código & dados ↗</a>
+      </footer>
     </>
   );
 }
