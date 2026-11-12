@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from bench.avaliadores import obter
 from bench.dataset import ITENS, carregar, conferir_itens
 from bench.grade import corrigir, normalizar, parse_alternativa, parse_data, parse_json, parse_numero, parse_rotulo
 from bench.tasks import TASKS
@@ -137,8 +138,7 @@ class TestConjunto:
         """Escrever o gabarito como o modelo escreveria tem que dar acerto."""
         for item in self.itens:
             task = TASKS[item["task"]]
-            gabarito = item["gabarito"]
-            texto = json.dumps(gabarito, ensure_ascii=False) if task.answer_type == "json" else str(gabarito)
+            texto = obter(task.answer_type).gabarito_como_texto(item, task)
             assert corrigir(item, texto)["acertou"], f"{item['id']}: o próprio gabarito não passa"
 
     def test_alternativas_nao_ficam_todas_na_mesma_letra(self):

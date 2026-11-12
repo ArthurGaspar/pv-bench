@@ -8,6 +8,7 @@ import {
   nomeCurto,
   pct,
   respostasPorItem,
+  segundosTexto,
 } from "./dados";
 
 export function Placar() {
@@ -149,7 +150,7 @@ export function Placar() {
                   </td>
                   <td className="num mono">{pct(p.formatoOk, p.total)}</td>
                   <td className="num mono">
-                    {p.segundosPorItem.toFixed(1).replace(".", ",")} s
+                    {segundosTexto(p.segundosPorItem)}
                   </td>
                   <td>
                     <a

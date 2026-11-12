@@ -56,9 +56,31 @@ npm run dev
 
 Outros provedores podem ser usados pelo LiteLLM, configurando a chave no ambiente e passando o nome com `--modelos`. Isso pode gerar cobrança do provedor.
 
+### Lotes, retomada e importação
+
+```powershell
+# Vários modelos, cada um com sua configuração (veja lotes/exemplo.json)
+python -m bench.lote lotes/exemplo.json --so-validar
+python -m bench.lote lotes/exemplo.json --pular-prontos
+
+# Respostas geradas fora deste harness: JSON, JSONL ou o CSV exportado pelo site
+python -m bench.importar respostas.jsonl --modelo provedor/modelo --so-validar
+python -m bench.importar respostas.jsonl --modelo provedor/modelo
+```
+
+Cada resposta é gravada em `data/resultados/.parcial/` assim que chega. Se uma execução for interrompida, o mesmo comando retoma de onde parou e refaz só as chamadas que falharam no provedor; `--do-zero` descarta o parcial. `--paralelo N` faz N chamadas simultâneas, útil em APIs remotas.
+
+A importação recorrige tudo a partir do texto bruto e não aceita notas de fora; divergências aparecem como aviso. Item desconhecido, tarefa trocada, duplicata, campo com tipo errado ou prompts de outra versão do conjunto impedem a gravação, e nenhum arquivo é gravado se qualquer rodada do arquivo tiver erro. Resultado existente só é substituído com `--substituir`.
+
+### Plugins de avaliador
+
+Cada tipo de resposta tem um avaliador (`bench/avaliadores.py`): `extrair` tira o valor do texto, `conferir` compara com o gabarito e `validar_item` confere o gabarito ao carregar o conjunto. Um plugin registra avaliadores novos com `registrar_avaliador` e tarefas com `registrar_tarefa`. Ele é carregado por `--plugins modulo`, pela variável `RECADO_PLUGINS`, pelo entry point `recado_bench.avaliadores` ou pelo campo `plugins` do conjunto; este último é o que vale para o CI, que monta o site sem argumentos. Exemplo em `exemplos/plugin_hora.py`.
+
 Para compilar o site: `cd web` e `npm run build`. O GitHub Actions testa o harness e publica o site a partir dos resultados versionados.
 
 ## Correção e integridade
+
+**Versões.** `data/items.json` tem cabeçalho com `esquema`, `nome` e `versao`, e cada rodada nova grava o conjunto com que foi feita, incluindo a impressão: um hash dos prompts exatos enviados ao modelo. Uma rodada cuja impressão não bate com o conjunto atual é recusada na montagem e na importação. Gabarito e `pega` ficam fora do hash, porque as notas sempre são recalculadas; mudar mensagem, contexto ou template exige rodar de novo. Rodadas anteriores ao esquema não têm impressão e passam só pela conferência item a item. Os formatos estão descritos em `bench/esquema.py`.
 
 **Acerto** compara o valor extraído com o gabarito. A extração tolera texto adicional. Respostas com vários campos precisam acertar todos; não há crédito parcial.
 
@@ -75,10 +97,16 @@ Os testes cobrem parsers, coerência dos gabaritos, distribuição das alternati
 ```text
 bench/tasks.py      prompts e tipos de resposta das oito tarefas
 bench/grade.py      extração e comparação com o gabarito
+bench/avaliadores.py interface e registro dos avaliadores, carga de plugins
+bench/esquema.py    esquemas versionados do conjunto e das rodadas
 bench/dataset.py    carregamento e validação dos itens
-bench/run.py        execução via LiteLLM e gravação das respostas
+bench/run.py        execução via LiteLLM, paralelismo e retomada
+bench/lote.py       execução em lote a partir de uma especificação
+bench/importar.py   importação validada de resultados externos
 bench/build.py      validação das rodadas e geração do JSON do site
 data/items.json     conjunto manual versionado
+lotes/              especificações de lote
+exemplos/           plugin de exemplo
 data/resultados/    rodadas incluídas no projeto
 web/src/            interface React e estilos
 tests/              testes do corretor, conjunto e publicação

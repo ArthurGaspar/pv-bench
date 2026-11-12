@@ -9,42 +9,42 @@ escreve web/public/data. É o passo que o CI roda, já que o CI não tem modelo.
 import json
 from datetime import datetime, timezone
 
-from .dataset import RAIZ, carregar
-from .grade import corrigir
+from .dataset import RAIZ, carregar_conjunto
+from .esquema import conferir_estrutura_rodada, conferir_rodada, migrar_rodada
 from .tasks import TASKS
 
 RESULTADOS = RAIZ / "data" / "resultados"
 SAIDA = RAIZ / "web" / "public" / "data"
 
 
-def preparar_rodadas(rodadas: list[dict], itens: list[dict]) -> list[dict]:
-    por_id = {i["id"]: i for i in itens}
+def preparar_rodadas(rodadas: list[dict], itens: list[dict], conjunto: dict | None = None) -> list[dict]:
     modelos: set[str] = set()
     completas = []
     for rodada in rodadas:
-        modelo = rodada["modelo"]
+        rodada = migrar_rodada(rodada)
+        modelo = rodada.get("modelo")
         if modelo in modelos:
             raise ValueError(f"modelo repetido: {modelo}")
         modelos.add(modelo)
-        vistos: set[str] = set()
-        respostas = []
-        for resposta in rodada["respostas"]:
-            id_ = resposta["id"]
-            if id_ in vistos:
-                raise ValueError(f"{modelo}: item repetido {id_}")
-            vistos.add(id_)
-            if id_ not in por_id:
-                raise ValueError(f"{modelo}: item desconhecido {id_}")
-            item = por_id[id_]
-            if resposta["task"] != item["task"]:
-                raise ValueError(f"{modelo}: tarefa inconsistente em {id_}")
-            resultado = corrigir(item, resposta["bruto"])
-            if not resposta["bruto"] and resposta.get("erro_formato"):
-                resultado["erro_formato"] = resposta["erro_formato"]
-            respostas.append({**resposta, **resultado})
-        if vistos == set(por_id):
+        respostas, faltando = conferir_rodada(rodada, itens, conjunto)
+        if not faltando:
             completas.append({**rodada, "respostas": respostas})
     return completas
+
+
+def ler_rodadas(arquivos) -> list[dict]:
+    rodadas, erros = [], []
+    for f in arquivos:
+        try:
+            rodada = migrar_rodada(json.loads(f.read_text(encoding="utf-8")))
+        except ValueError as e:
+            erros.append(f"{f.name}: {e}")
+            continue
+        erros += [f"{f.name}: {e}" for e in conferir_estrutura_rodada(rodada)]
+        rodadas.append(rodada)
+    if erros:
+        raise ValueError("rodadas com estrutura inválida:\n  " + "\n  ".join(erros))
+    return rodadas
 
 
 def escrever(nome: str, dados) -> None:
@@ -55,12 +55,12 @@ def escrever(nome: str, dados) -> None:
 
 
 def main() -> None:
-    itens = carregar()
+    conjunto = carregar_conjunto()
+    itens = conjunto.itens
     arquivos = sorted(RESULTADOS.glob("*.json"))
     if not arquivos:
         raise SystemExit("Sem resultados em data/resultados; rode `python -m bench.run` primeiro.")
-    rodadas = [json.loads(f.read_text(encoding="utf-8")) for f in arquivos]
-    completas = preparar_rodadas(rodadas, itens)
+    completas = preparar_rodadas(ler_rodadas(arquivos), itens, conjunto.cabecalho())
     if not completas:
         raise SystemExit("Nenhuma rodada cobriu todos os itens; rode `python -m bench.run` sem --tarefas.")
 
@@ -71,13 +71,14 @@ def main() -> None:
                 "modelo": r["modelo"],
                 "rodadoEm": r["rodadoEm"],
                 "segundos": r["segundos"],
+                "origem": r["origem"]["tipo"],
                 "acertos": sum(x["acertou"] for x in r["respostas"]),
                 "total": len(r["respostas"]),
                 "formatoOk": sum(x["formato_ok"] for x in r["respostas"]),
-                "segundosPorItem": round(r["segundos"] / max(1, len(r["respostas"])), 2),
+                "segundosPorItem": None if r["segundos"] is None else round(r["segundos"] / max(1, len(r["respostas"])), 2),
             }
         )
-    placar.sort(key=lambda p: (-p["acertos"], p["segundosPorItem"]))
+    placar.sort(key=lambda p: (-p["acertos"], p["segundosPorItem"] is None, p["segundosPorItem"] or 0))
 
     respostas = []
     for r in completas:
@@ -88,6 +89,7 @@ def main() -> None:
         "benchmark.json",
         {
             "geradoEm": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "conjunto": conjunto.cabecalho(),
             "tarefas": [
                 {"id": t.id, "titulo": t.titulo, "descricao": t.descricao, "tipo": t.answer_type, "rotulos": list(t.rotulos)}
                 for t in TASKS.values()

@@ -8,3 +8,7 @@ web/node_modules/
 web/dist/
 # Gerado por `python -m bench.build`; o CI refaz a cada deploy
 web/public/data/
+
+# Respostas de execuções interrompidas, usadas para retomar
+data/resultados/.parcial/
+todo.txt

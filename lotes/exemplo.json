@@ -1,0 +1,9 @@
+{
+ "esquema": 1,
+ "descricao": "Os dois modelos locais das rodadas publicadas, um de cada vez para caber na memória.",
+ "padrao": {"paralelo": 1, "max_tokens": 200},
+ "modelos": [
+  "ollama/qwen2.5:7b",
+  "ollama/qwen2.5-coder:7b"
+ ]
+}

@@ -110,6 +110,7 @@ npm run dev`}</pre>
               <tr>
                 <th>Modelo</th>
                 <th>Data da rodada</th>
+                <th>Origem</th>
                 <th className="num">Duração</th>
               </tr>
             </thead>
@@ -122,13 +123,17 @@ npm run dev`}</pre>
                       timeZone: "America/Sao_Paulo",
                     })}
                   </td>
-                  <td className="num mono">{Math.round(p.segundos)} s</td>
+                  <td>{p.origem === "importado" ? "Importada" : "Local"}</td>
+                  <td className="num mono">
+                    {p.segundos === null ? "-" : `${Math.round(p.segundos)} s`}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
           <p className="peq rodape-tabela">
-            Horário de Brasília. Dados montados em{" "}
+            Horário de Brasília. Conjunto {dados.conjunto.nome}{" "}
+            {dados.conjunto.versao}. Dados montados em{" "}
             {new Date(dados.geradoEm).toLocaleString("pt-BR", {
               timeZone: "America/Sao_Paulo",
             })}

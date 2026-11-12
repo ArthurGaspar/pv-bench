@@ -20,11 +20,12 @@ export interface Item {
 interface LinhaPlacar {
   modelo: string;
   rodadoEm: string;
-  segundos: number;
+  segundos: number | null;
+  origem: "local" | "importado";
   acertos: number;
   total: number;
   formatoOk: number;
-  segundosPorItem: number;
+  segundosPorItem: number | null;
 }
 
 export interface Resposta {
@@ -32,7 +33,7 @@ export interface Resposta {
   id: string;
   task: string;
   bruto: string;
-  segundos: number;
+  segundos: number | null;
   extraido: unknown;
   acertou: boolean;
   formato_ok: boolean;
@@ -41,6 +42,7 @@ export interface Resposta {
 
 export interface Benchmark {
   geradoEm: string;
+  conjunto: { nome: string; versao: string; impressao: string };
   tarefas: Tarefa[];
   itens: Item[];
   placar: LinhaPlacar[];
@@ -78,6 +80,9 @@ export const gabaritoTexto = (g: Item["gabarito"]) =>
         .map(([k, v]) => `${k}: ${v}`)
         .join(" · ")
     : String(g);
+
+export const segundosTexto = (s: number | null, casas = 1) =>
+  s === null ? "-" : `${s.toFixed(casas).replace(".", ",")} s`;
 
 export const pct = (parte: number, total: number) =>
   total ? `${Math.round((parte / total) * 100)}%` : "-";

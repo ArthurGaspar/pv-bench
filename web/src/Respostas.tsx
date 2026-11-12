@@ -6,6 +6,7 @@ import {
   linkRespostas,
   nomeCurto,
   respostasPorItem,
+  segundosTexto,
   type Item,
   type Resposta,
 } from "./dados";
@@ -237,7 +238,7 @@ function Registro({ item, respostas }: { item: Item; respostas: Resposta[] }) {
                 <span>
                   {r.formato_ok ? "✓ Formato limpo" : "× Fora do formato"}
                 </span>
-                <span className="mono">{r.segundos.toFixed(2)} s</span>
+                <span className="mono">{segundosTexto(r.segundos, 2)}</span>
               </div>
               {!r.acertou && r.extraido !== null && (
                 <p className="peq">

@@ -11,9 +11,10 @@ perder o ponto por enfeitar a resposta.
 """
 
 from dataclasses import dataclass
-from typing import Literal
 
-AnswerType = Literal["json", "numero", "rotulo", "data", "alternativa", "nome"]
+# Os tipos embutidos são "json", "numero", "rotulo", "data", "alternativa" e
+# "nome"; plugins registram outros em bench.avaliadores.
+AnswerType = str
 
 FORMATO = "Responda APENAS com {formato}, sem explicação, sem comentário e sem markdown."
 
@@ -134,5 +135,15 @@ TASKS: dict[str, Task] = {
         ),
     ),
 }
+
+
+
+def registrar_tarefa(task: Task, substituir: bool = False) -> Task:
+    """Para plugins: acrescenta uma tarefa. O avaliador do tipo é conferido ao carregar o conjunto."""
+    if task.id in TASKS and not substituir:
+        raise ValueError(f"tarefa {task.id!r} já existe")
+    TASKS[task.id] = task
+    return task
+
 
 DIAS = ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo"]

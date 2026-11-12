@@ -10,24 +10,18 @@ R$ 1.500,00 😊". A extração é tolerante para não confundir compreensão co
 obediência, mas o relatório mostra as duas colunas.
 """
 
+import datetime
 import json
 import re
 import unicodedata
-from dataclasses import dataclass
 
+from .avaliadores import Avaliador, Parsed, obter, registrar_avaliador
 from .tasks import TASKS, Task
 
 MOEDA = re.compile(r"(?i)\b(r\$|reais?|pila|conto)\b|\s")
 NUMERO = re.compile(r"-?\d[\d.,]*")
 DATA = re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b")
 LETRA = re.compile(r"(?i)\b([a-e])\b")
-
-
-@dataclass
-class Parsed:
-    valor: object | None
-    formato_ok: bool  # a saída já era exatamente o formato pedido
-    erro: str | None = None
 
 
 def sem_acento(texto: str) -> str:
@@ -130,29 +124,106 @@ def parse_nome(bruto: str) -> Parsed:
     return Parsed(achado.group(0), texto == achado.group(0))
 
 
-def extrair(task: Task, item: dict, bruto: str) -> Parsed:
-    if task.answer_type == "numero":
+class Numero(Avaliador):
+    nome = "numero"
+
+    def extrair(self, bruto, item, task):
         return parse_numero(bruto)
-    if task.answer_type == "json":
+
+    def conferir(self, valor, item, task):
+        return isinstance(valor, float) and abs(valor - float(item["gabarito"])) < 1e-6
+
+    def validar_item(self, item, task):
+        g = item.get("gabarito")
+        return [] if isinstance(g, (int, float)) and not isinstance(g, bool) else ["gabarito deveria ser número"]
+
+
+class Json(Avaliador):
+    nome = "json"
+
+    def extrair(self, bruto, item, task):
         return parse_json(bruto, list(item["gabarito"].keys()))
-    if task.answer_type == "rotulo":
+
+    def conferir(self, valor, item, task):
+        return isinstance(valor, dict) and all(str(valor.get(c, "")).strip() == str(v) for c, v in item["gabarito"].items())
+
+    def validar_item(self, item, task):
+        return [] if isinstance(item.get("gabarito"), dict) else ["gabarito deveria ser um objeto"]
+
+    def gabarito_como_texto(self, item, task):
+        return json.dumps(item["gabarito"], ensure_ascii=False)
+
+
+class Rotulo(Avaliador):
+    nome = "rotulo"
+
+    def extrair(self, bruto, item, task):
         return parse_rotulo(bruto, task.rotulos)
-    if task.answer_type == "data":
+
+    def conferir(self, valor, item, task):
+        return str(valor) == str(item["gabarito"])
+
+    def validar_item(self, item, task):
+        g = item.get("gabarito")
+        return [] if g in task.rotulos else [f"rótulo {g!r} fora da lista da tarefa"]
+
+
+class Data(Avaliador):
+    nome = "data"
+
+    def extrair(self, bruto, item, task):
         return parse_data(bruto)
-    if task.answer_type == "alternativa":
+
+    def conferir(self, valor, item, task):
+        return str(valor) == str(item["gabarito"])
+
+    def validar_item(self, item, task):
+        try:
+            datetime.date.fromisoformat(str(item.get("gabarito")))
+        except ValueError:
+            return [f"data inválida {item.get('gabarito')!r}"]
+        return []
+
+
+class Alternativa(Avaliador):
+    nome = "alternativa"
+
+    def extrair(self, bruto, item, task):
         return parse_alternativa(bruto, item["alternativas"])
-    return parse_nome(bruto)
+
+    def conferir(self, valor, item, task):
+        return str(valor) == str(item["gabarito"])
+
+    def validar_item(self, item, task):
+        erros = []
+        alternativas = item.get("alternativas") or {}
+        if item.get("gabarito") not in alternativas:
+            erros.append(f"alternativa {item.get('gabarito')!r} não existe")
+        if len(alternativas) < 3:
+            erros.append("precisa de pelo menos 3 alternativas")
+        return erros
+
+
+class Nome(Avaliador):
+    nome = "nome"
+
+    def extrair(self, bruto, item, task):
+        return parse_nome(bruto)
+
+    def conferir(self, valor, item, task):
+        return normalizar(str(valor)) == normalizar(str(item["gabarito"]))
+
+
+for _avaliador in (Numero(), Json(), Rotulo(), Data(), Alternativa(), Nome()):
+    registrar_avaliador(_avaliador)
+
+
+def extrair(task: Task, item: dict, bruto: str) -> Parsed:
+    return obter(task.answer_type).extrair(bruto, item, task)
 
 
 def conferir(task: Task, item: dict, valor: object) -> bool:
-    gabarito = item["gabarito"]
-    if task.answer_type == "numero":
-        return isinstance(valor, float) and abs(valor - float(gabarito)) < 1e-6
-    if task.answer_type == "json":
-        return isinstance(valor, dict) and all(str(valor.get(c, "")).strip() == str(v) for c, v in gabarito.items())
-    if task.answer_type in ("rotulo", "data", "alternativa"):
-        return str(valor) == str(gabarito)
-    return normalizar(str(valor)) == normalizar(str(gabarito))
+    return obter(task.answer_type).conferir(valor, item, task)
 
 
 def corrigir(item: dict, bruto: str) -> dict:

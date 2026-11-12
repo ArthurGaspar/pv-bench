@@ -1,4 +1,6 @@
-[
+{"esquema": 1, "nome": "recado", "versao": "1.0.0",
+ "descricao": "Compreensão de mensagens em português brasileiro informal.",
+ "itens": [
  {"id": "compromisso-01", "task": "compromisso", "contexto": {"hoje": "2026-03-10"},
   "mensagem": "blz entao fica combinado ne, qui q vem 15h no shopping ali perto da tua casa 🫡",
   "gabarito": {"data": "2026-03-12", "hora": "15:00"},
@@ -327,3 +329,4 @@
   "gabarito": 1,
   "pega": "a resposta é o resto da divisão, não o quociente"}
 ]
+}
