@@ -112,6 +112,8 @@ web/src/            interface React e estilos
 tests/              testes do corretor, conjunto e publicação
 ```
 
+Arquitetura, formatos de arquivo, regras do conjunto, operação e plugins estão descritos em [`docs/`](docs/README.md).
+
 ## Limites
 
 - Mensagens sintéticas escritas à mão, sem amostragem representativa de conversas, regiões ou grupos sociais.
